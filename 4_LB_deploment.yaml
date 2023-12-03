@@ -4,7 +4,7 @@ metadata:
   name: webdeployment
   namespace: devproject
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       apptype: web
@@ -17,7 +17,7 @@ spec:
         env: dev
     spec:
       containers:
-      - image: srinivasaprasad28/farmfresh:v1
+      - image: srinivasaprasad28/medplus:v1
         name: webcon
         imagePullPolicy: Always
         ports:

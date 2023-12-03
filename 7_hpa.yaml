@@ -17,7 +17,7 @@ spec:
         env: dev
     spec:
       containers:
-      - image: srinivasaprasad28/dev1:v1
+      - image: srinivasaprasad28/sbs:v1
         name: webcon
         imagePullPolicy: Always
         ports:

@@ -17,7 +17,7 @@ spec:
         env: dev
     spec:
       containers:
-      - image: srinivasaprasad28/dev1:v1
+      - image: srinivasaprasad28/finance:v1
         name: webcon
         imagePullPolicy: Always
         ports:
@@ -50,26 +50,26 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bananadeployment
+  name: bankdeployment
   namespace: devproject
 spec:
   replicas: 2
   selector:
     matchLabels:
-      apptype: banana
+      apptype: bank
       env: dev
   template:
     metadata:
-      name: bananatemp
+      name: banktemp
       labels:
-        apptype: banana
+        apptype: bank
         env: dev
     spec:
       containers:
       - image: hashicorp/http-echo
         args:
-          - "-text=banana"
-        name: bananacon
+          - "-text=bank"
+        name: bankcon
         imagePullPolicy: Always
         ports:
         -  name: apache
@@ -86,7 +86,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
- name: bananasvc   #service name 
+ name: banksvc   #service name 
  namespace: devproject
 spec:
  ports:
@@ -95,32 +95,32 @@ spec:
    targetPort: 5678 #container port
    protocol: TCP
  selector:     #mapping to pod
-   apptype: banana
+   apptype: bank
    env: dev
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: appledeployment
+  name: cryptodeployment
   namespace: devproject
 spec:
   replicas: 2
   selector:
     matchLabels:
-      apptype: apple
+      apptype: crypto
       env: dev
   template:
     metadata:
-      name: appletemp
+      name: cryptotemp
       labels:
-        apptype: apple
+        apptype: crypto
         env: dev
     spec:
       containers:
       - image: hashicorp/http-echo
         args:
-          - "-text=apple"
-        name: applecon
+          - "-text=crypto"
+        name: cryptocon
         imagePullPolicy: Always
         ports:
         -  name: apache
@@ -137,7 +137,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
- name: applesvc   #service name 
+ name: cryptosvc   #service name 
  namespace: devproject
 spec:
  ports:
@@ -146,7 +146,7 @@ spec:
    targetPort: 5678 #container port
    protocol: TCP
  selector:     #mapping to pod
-   apptype: apple
+   apptype: crypto
    env: dev
 ---
 apiVersion: networking.k8s.io/v1
@@ -174,16 +174,16 @@ spec:
          pathType: "Prefix"
          backend:
            service:
-               name: bananasvc
+               name: banksvc
                port:
                  number: 80
    - host: "www.techieproject.com"
      http:
        paths:
-       - path: "/apple"
+       - path: "/crypto"
          pathType: "Prefix"
          backend:
            service:
-              name: applesvc
+              name: cryptosvc
               port:
                 number: 80
